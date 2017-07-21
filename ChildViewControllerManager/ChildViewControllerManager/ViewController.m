@@ -13,6 +13,9 @@
 
 @interface ViewController ()
 @property(nonatomic,strong)UIViewController *currentVC;
+@property(nonatomic,strong)FirstViewController *firstVC;
+@property(nonatomic,strong)SecondViewController *secondVC;
+@property(nonatomic,strong)LastViewController *lastVC;
 @end
 
 @implementation ViewController
@@ -32,16 +35,39 @@
     self.currentVC = firstVC;
 }
 
-- (void)buttonAction:(UIBarButtonItem *)bbi {
-    NSInteger index = arc4random()%3;
-    UIViewController *vc = nil;
-    if (index == 0) {
-        vc = [[FirstViewController alloc] init];
-    } else if (index == 1) {
-        vc = [[SecondViewController alloc] init];
-    } else {
-        vc = [[LastViewController alloc] init];
+- (FirstViewController *)firstVC {
+    if (!_firstVC) {
+        _firstVC = [[FirstViewController alloc] init];
     }
+    return _firstVC;
+}
+
+- (SecondViewController *)secondVC {
+    if (!_secondVC) {
+        _secondVC = [[SecondViewController alloc] init];
+    }
+    return _secondVC;
+}
+
+- (LastViewController*)lastVC {
+    if (!_lastVC) {
+        _lastVC = [[LastViewController alloc] init];
+    }
+    return _lastVC;
+}
+
+- (void)buttonAction:(UIBarButtonItem *)bbi {
+    bbi.enabled = NO;
+    UIViewController *vc = nil;
+    do {
+        NSInteger index = arc4random()%3;
+        if (index == 0)
+            vc = self.firstVC;
+        else if (index == 1)
+            vc = self.secondVC;
+        else
+            vc = self.lastVC;
+    } while (vc == self.currentVC);
     [self replaceController:self.currentVC newController:vc];
 }
 
@@ -58,6 +84,7 @@
             self.currentVC = oldController;
             self.title = oldController.title;
         }
+        self.navigationItem.rightBarButtonItem.enabled = YES;
     }];
 }
 

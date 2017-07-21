@@ -6,8 +6,11 @@
 其实就是VC在管理被添加到它上面的子VC.
 
 1.didMoveToParentViewController
+
 2.willMoveToParentViewController
+
 3.removeFromParentViewController
+
 这三个方法在切换VC中的显示View。
 
 我们都知道一个VC自己的生命周期是从loadview->viewDidLoad->viewWillAppear->viewWillDisappear->viewDidDisappear
